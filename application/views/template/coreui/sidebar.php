@@ -15,6 +15,11 @@
                 <i class="fa fa-home c-sidebar-nav-icon"></i> Dashboard
             </a>
         </li>
+        <li class="c-sidebar-nav-item">
+            <a class="c-sidebar-nav-link" href="<?php echo base_url('patient') ?>">
+                <i class="fa fa-address-card c-sidebar-nav-icon"></i> Pasien
+            </a>
+        </li>
         <li class="c-sidebar-nav-title">Setting</li>
         <li class="c-sidebar-nav-item">
             <a class="c-sidebar-nav-link" href="<?php echo base_url('group') ?>">

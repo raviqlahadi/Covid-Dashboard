@@ -94,3 +94,4 @@ define('FAVICON_IMAGE', 'assets/favicon.ico');
 define('ICON_IMAGE', 'assets/logo/coreigniter.png');
 define('COREUI_PATH', 'assets/node_modules/@coreui/coreui/dist/');
 define('FONTAWESOME_PATH', 'assets/node_modules/@fortawesome/fontawesome-free/');
+define('CHARTJS_PATH', 'assets/node_modules/chart.js/dist/');

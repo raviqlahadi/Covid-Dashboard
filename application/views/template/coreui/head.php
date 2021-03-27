@@ -5,12 +5,14 @@
 <meta name="description" content="<?php echo APP_DESC ?>" />
 <meta name="author" content="<?php echo APP_AUTHOR ?>">
 
-<title><?php echo APP_NAME .' - '. APP_DESC ?></title>
+<title><?php echo APP_NAME . ' - ' . APP_DESC ?></title>
 
 <link rel="shortcut icon" type="image/png" href="<?php echo base_url() . FAVICON_IMAGE; ?>" />
 <!-- Main styles for this application-->
 <link href="<?php echo base_url() .  COREUI_PATH  ?>css/coreui.min.css" rel="stylesheet">
 <link href="<?php echo base_url() .  FONTAWESOME_PATH  ?>css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="<?php echo base_url() .  CHARTJS_PATH  ?>Chart.min.css">
+<link rel="stylesheet" href="<?php echo base_url() . '/assets/coreui/css/coreui-chartjs.css'; ?>" />
 
 <!-- Costum Style -->
-<link rel="stylesheet" href="<?php echo base_url() .'/assets/css/style.css'; ?>" />
+<link rel="stylesheet" href="<?php echo base_url() . '/assets/css/style.css'; ?>" />
