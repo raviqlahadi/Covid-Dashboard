@@ -290,7 +290,7 @@ class Patient extends MY_Controller
         redirect($this->url);    
     }
 
-    public function form_validation_rules($edit=false)
+    public function form_validation_rules()
     {
 
         $this->form_validation->set_rules('patient_number', 'Nomor Pasien', 'required|min_length[5]',

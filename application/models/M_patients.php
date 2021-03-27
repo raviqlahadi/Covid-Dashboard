@@ -29,6 +29,14 @@ class M_patients extends MY_Model{
       return $query->result();
     }
 
+    public function get_recap(){
+        $query = $this->db->query("SELECT date, COUNT(*) as total, SUM(if(status = 'Dirawat', 1, 0)) AS dirawat, 
+        SUM(if(status = 'Meninggal', 1, 0)) AS meninggal, SUM(if(status = 'Sembuh', 1, 0)) AS sembuh
+        FROM patients GROUP BY date ORDER BY date DESC");
+        return $query->result();
+
+    }
+
     public function getWhere($data){
       $query = ($this->db->where($data)->get($this->table));
       return $query->result();

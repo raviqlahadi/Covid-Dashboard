@@ -50,7 +50,7 @@
                                         <div class="col-12">
                                             <div class="float-left">
                                                 <a class="btn btn-primary text-white" href="<?php echo $page_url . '/create'; ?>"><i class="fa fa-plus"></i> Pasien Baru</a>
-                                                <a class="btn btn-success text-white" href="<?php echo $page_url . '/create'; ?>"><i class="fa fa-file-excel"></i> Rekap</a>
+                                                <a class="btn btn-success text-white" href="<?php echo site_url('recap'); ?>"><i class="fa fa-file-excel"></i> Rekap</a>
                                             </div>
 
                                         </div>
