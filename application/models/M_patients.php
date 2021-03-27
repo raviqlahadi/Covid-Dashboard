@@ -13,7 +13,7 @@ class M_patients extends MY_Model{
     private $id = 'id';
 
     public function fetch($data, $count=false, $compiled=false){
-      return $this->fetch_db($data, $count, $compiled);
+      return $this->new_fetch_db($data, $count, $compiled);
     }
 
     public function get(){

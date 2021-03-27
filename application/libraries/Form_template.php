@@ -174,4 +174,17 @@ class Form_template
             </div>
         ";
     }
+
+    public function filter($href='')
+    {
+        return "
+             <div class='col-12'>
+                <div class='float-right'>                    
+                <a href='".site_url($href)."' class='btn btn-outline-primary' type=''> Reset</a>    
+                <button class='btn btn btn-primary px-5' type='submit'> Filter</button>
+                     
+                </div>
+            </div>
+        ";
+    }
 }

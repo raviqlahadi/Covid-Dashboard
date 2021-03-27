@@ -1,4 +1,7 @@
 <?php
+
+use phpDocumentor\Reflection\DocBlock\Tags\Var_;
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class Patient extends MY_Controller
@@ -44,16 +47,75 @@ class Patient extends MY_Controller
             'status' => 'Status'
         );
 
-        $search = ($this->input->get('search') != null ) ? $this->input->get('search') : false ;
         
-
-        if($search){
-            $fetch['like'] = array('name'=>array('patient_number','age','status'), 'key'=>$search);
+        if($this->input->get('status')!=null){
+            $status =  $this->input->get('status');
+            $data['form_value']['status'] = $status;
+        }else{
+            $status = false;
         }
 
+        if ($this->input->get('age') != null) {
+            $age =  $this->input->get('age');
+            if($age<=0){
+                $data['form_error']['age'] = 'Umur Pasien Tidak Boleh Kosong Atau Dibawah Angka 0';
+                $age = false;
+            }else{
+                $data['form_value']['age'] = $age;
+            }
+        } else {
+            $age = false;
+        }
+
+        if ($this->input->get('date_start') != null) {
+            $date_start =  $this->input->get('date_start');
+            $data['form_value']['date_start'] = $date_start;
+        } else {
+            $date_start = false;
+        }
+
+        if ($this->input->get('date_end') != null) {
+            $date_end =  $this->input->get('date_end');
+            $data['form_value']['date_end'] = $date_end;
+        } else {
+            $date_end = false;
+        }
+
+        if($date_start!=false && $date_end!=false){
+            $date1 = strtotime($date_start);
+            $date2 = strtotime($date_end);
+            $diff = round(($date2 - $date1) / (60 * 60 * 24), 0);
+            if($diff<0){
+                $date_start = false;
+                $date_end = false;
+                $data['form_error']['date'] = 'Tanggal Akhir lebih kecil dari tanggal mulai';
+            }
+        }
+    
+       
         $fetch['select'] = array('id','date', 'patient_number','status','age');
         $fetch['start'] = $start_record;
         $fetch['limit'] = $limit_per_page;
+        if ($date_start != false && $date_end != false) {
+            $fetch['where'] = array("date >= '" . $date_start . "' AND date <='" . $date_end . "'");
+        }elseif($date_start != false && $date_end==false){
+            $fetch['where'] = array("date >='" . $date_start . "'");
+        }elseif($date_start == false && $date_end!=false){
+            $fetch['where'] = array("date <='". $date_end . "'");            
+        }else{
+            $fetch['where'] = array();
+        }
+
+        if ($status != false) {
+            array_push($fetch['where'], array('status' => $status));
+            
+        }
+
+        if ($age != false) {
+            array_push($fetch['where'], array('age' => $age));
+            
+        }
+
         $fetch['order'] = array(
             "field" => "date",
             "type" => "DESC"
@@ -81,6 +143,7 @@ class Patient extends MY_Controller
 
 
         //page properties        
+        $data['status_select'] = $this->status;
         $data['breadcrumbs'] = $this->breadcrumbs->show();
         $data['page_title'] = '<strong>Patient</strong> Management';
         $data['table_start_number'] = $start_record;
@@ -234,8 +297,9 @@ class Patient extends MY_Controller
             array('required'=>'Anda Perlu Mengisi Nomor Pasien'));
         $this->form_validation->set_rules('date', 'Tanggal', 'required', 
             array('required'=>'Anda Perlu Memilih Tanggal'));
-        $this->form_validation->set_rules('age', 'Umur', 'required|integer', 
-            array('required'=>'Anda Perlu Memasukan Umur Pasien'));
+        $this->form_validation->set_rules('age', 'Umur', 'required|integer|greater_than_equal_to[1]', 
+            array('required'=>'Anda Perlu Memasukan Umur Pasien',
+                'greater_than_equal_to' => 'Umur Pasien Tidak Boleh Kosong Atau Dibawah Angka 0'));
         $this->form_validation->set_rules('status', 'Status', 'required', 
             array('required'=>'Anda Perlu Memilih Status Pasien'));
        
