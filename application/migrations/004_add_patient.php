@@ -34,11 +34,11 @@ class Migration_add_patient extends CI_Migration
             )
         );
         $this->dbforge->add_key('id', TRUE);
-        $this->dbforge->create_table('patient');
+        $this->dbforge->create_table('patients');
     }
 
     public function down()
     {
-        $this->dbforge->drop_table('patient');
+        $this->dbforge->drop_table('patients');
     }
 }

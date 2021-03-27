@@ -1,9 +1,10 @@
 <?php
 
-class Form_template{
-              
-    public function __construct(){
-        
+class Form_template
+{
+
+    public function __construct()
+    {
     }
 
     /**
@@ -16,17 +17,18 @@ class Form_template{
      * @return String html text
      */
 
-    public function text($label, $name, $placeholder=null, $value=null){
-        if($placeholder == null){
-            $placeholder = 'Enter your '. $name;
+    public function text($label, $name, $placeholder = null, $value = null, $readonly = false)
+    {
+        if ($placeholder == null) {
+            $placeholder = 'Enter your ' . $name;
         }
+          $readonly = ($readonly) ? 'readonly' : '';
         return "
         <label class='col-form-label' for='" . $name . "'>" . $label . "</label>
-        <input class='form-control' id='". $name . "' type='text' name='" . $name . "' placeholder='" . $placeholder . "' value='" . $value . "'>
+        <input class='form-control' id='" . $name . "' type='text' name='" . $name . "' placeholder='" . $placeholder . "' value='" . $value . "'  " . $readonly . ">
         
         
         ";
-
     }
 
     public function password($label, $name, $placeholder = null, $value = null)
@@ -55,22 +57,51 @@ class Form_template{
         ";
     }
 
-    public function select($label, $name, $option, $selected = null)
-    {
-        $select_option = "<option value='0'>Please select</option>";
+    public function select($label, $name, $option, $selected = null, $placeholder = null, $readonly = false)
+    {   
+        $option_string =  ($placeholder != null) ? $placeholder : "Please select option";
+        $select_option = "<option value=''>". $option_string ."</option>";
         foreach ($option as $key => $value) {
-
+            if (!is_object($value)) $value = (object) $value;
             $is_selected = ($selected != null && $value->id == $selected) ? 'selected' : '';
-            $select_option = $select_option."<option " . $is_selected . " value='".$value->id."'>".$value->name."</option>";
+            $select_option = $select_option . "<option " . $is_selected . " value='" . $value->id . "'>" . $value->name . "</option>";
         }
-       
+
+        $readonly = ($readonly) ? 'readonly' : '';
+
 
         return "
         <label class='col-form-label' for='" . $name . "'>" . $label . "</label>
-        <select class='form-control' id='select1' name='" . $name . "'>
+        <select class='form-control' id='select1' name='" . $name . "' " . $readonly . ">
             " . $select_option . "
         </select>
         ";
+    }
+
+    public function radio($label, $name, $option, $selected = null)
+    {
+
+        $radio_option = '';
+        $i = 1;
+        foreach ($option as $key => $value) {
+            if (!is_object($value)) $value = (object) $value;
+            $is_selected = ($selected != null && $value->value == $selected || $i == 1) ? 'checked' : '';
+
+            $radio_option = $radio_option . "
+                <div class='form-check'>
+                    <input class='' id='radioopt_" . $i . "' type='radio' value='" . $value->value . "' name='" . $name . "' " . $is_selected . ">
+                    <label class='' for='radioopt_" . $i . "'>" . $value->label . "</label>
+                </div>
+            ";
+            $i++;
+        }
+        return "
+        <div class='row'>
+            <div class='col-12'><label class='col-form-label' for='" . $name . "'>" . $label . "</label></div>
+            <div class='col-12'>
+            " . $radio_option . "
+            </div>
+        </div>";
     }
 
     /**
@@ -83,7 +114,7 @@ class Form_template{
      * @return String html text
      */
 
-    public function textarea($label, $name, $placeholder=null, $value = null)
+    public function textarea($label, $name, $placeholder = null, $value = null)
     {
         if ($placeholder == null) {
             $placeholder = 'enter your ' . $name;
@@ -97,24 +128,50 @@ class Form_template{
             ";
     }
 
+    public function date($label, $name, $placeholder = null, $value = null)
+    {
+        if ($placeholder == null) {
+            $placeholder = 'enter your ' . $name;
+        }
+        return "
+            <label class='col-form-label' for='" . $name . "'>" . $label . "</label>
+          
+            <input class='form-control' id='" . $name . "' type='date' name='" . $name . "' placeholder='" . $placeholder . "' value='" . $value . "'>
+          
+            
+            ";
+    }
+
+
+    public function number($label, $name, $placeholder = null, $value = null)
+    {
+        if ($placeholder == null) {
+            $placeholder = 'enter your ' . $name;
+        }
+        return "
+            <label class='col-form-label' for='" . $name . "'>" . $label . "</label>
+          
+            <input class='form-control' id='" . $name . "' type='number' name='" . $name . "' placeholder='" . $placeholder . "' value='" . $value . "'>
+          
+            
+            ";
+    }
+
     /**
      * Return submit button
      * @return String html text
      */
 
-    public function submit(){
+    public function submit()
+    {
         return "
              <div class='col-12'>
                 <div class='float-right'>                    
-                    <button class='btn btn-sm btn-primary' type='submit'> Submit</button>
-                     <button class='btn btn-sm btn-danger' type='reset'> Reset</button>
+                <button class='btn btn-outline-primary' type='reset'> Reset</button>    
+                <button class='btn btn btn-primary px-5' type='submit'> Submit</button>
+                     
                 </div>
             </div>
         ";
     }
-
-    
-
-
-
 }

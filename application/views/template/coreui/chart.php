@@ -1,27 +1,7 @@
 <script>
-    var random = function random() {
-        return Math.round(Math.random() * 100);
-    };
-    var line_label = [
-        "01/03/21",
-        "02/03/21",
-        "03/03/21",
-        "04/03/21",
-        "05/03/21",
-        "06/03/21",
-        "07/03/21",
-        "08/03/21",
-    ]
-    var line_data = [
-        1,
-        2,
-        4,
-        5,
-        5,
-        5,
-        21,
-        22,
-    ]
+    var line_label = JSON.parse('<?php echo $date_string ?>')
+    var line_data = JSON.parse('<?php echo $total_patient_string ?>')
+    var line_data_daily = JSON.parse('<?php echo $patient_string ?>')
     var lineChart = new Chart(document.getElementById('canvas-1'), {
         type: 'line',
         data: {
@@ -33,7 +13,14 @@
                 pointBackgroundColor: 'rgba(0, 0, 220, 0.6)',
                 pointBorderColor: '#fff',
                 data: line_data
-            }, ]
+            }, {
+                label: 'Kasus Positif Harian',
+                backgroundColor: 'rgba(43, 121, 100, 0.2)',
+                borderColor: 'rgba(43, 121, 100, 0.6)',
+                pointBackgroundColor: 'rgba(43, 121, 100, 0.6)',
+                pointBorderColor: '#fff',
+                data: line_data_daily
+            }]
         },
         options: {
             responsive: true
@@ -45,19 +32,16 @@
         "17-40",
         "> 40"
     ]
-    var doughnut_data = [
-        10,
-        200,
-        321
-    ]
+    var doughnut_data = JSON.parse('<?php echo $cluster_by_age ?>')
+    console.log(doughnut_data)
     var doughnutChart = new Chart(document.getElementById('canvas-3'), {
         type: 'doughnut',
         data: {
             labels: doughnut_label,
             datasets: [{
                 data: doughnut_data,
-                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
-                hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+                backgroundColor: ['#3399ff', '#321fdb', '#636f83'],
+                hoverBackgroundColor: ['#3399ff', '#321fdb', '#636f83']
             }]
         },
         options: {
@@ -74,11 +58,7 @@
         "Dirawat",
         "Meninggal"
     ]
-    var pie_data = [
-        123,
-        2012,
-        321
-    ]
+    var pie_data = JSON.parse('<?php echo $cluster_by_status ?>')
 
     var pieChart = new Chart(document.getElementById('canvas-5'), {
         type: 'pie',
@@ -86,8 +66,8 @@
             labels: pie_label,
             datasets: [{
                 data: pie_data,
-                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
-                hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+                backgroundColor: ['#2eb85c', '#f9b115', '#e55353'],
+                hoverBackgroundColor: ['#2eb85c', '#f9b115', '#e55353']
             }]
         },
         options: {
