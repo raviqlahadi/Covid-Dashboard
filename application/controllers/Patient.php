@@ -138,14 +138,14 @@ class Patient extends MY_Controller
 
 
         //breadcrumbs config
-        $this->breadcrumbs->push('Patient', '/patient');
+        $this->breadcrumbs->push('Pasien', '/patient');
         $this->breadcrumbs->unshift('Admin', '/');
 
 
         //page properties        
         $data['status_select'] = $this->status;
         $data['breadcrumbs'] = $this->breadcrumbs->show();
-        $data['page_title'] = '<strong>Patient</strong> Management';
+        $data['page_title'] = '<strong>Manajemen</strong> Pasien';
         $data['table_start_number'] = $start_record;
         $data['page_content'] = 'page/patient/index';
         $data['page_current'] = 'page/patient';
@@ -159,18 +159,18 @@ class Patient extends MY_Controller
     {
         
         //breadcrumbs config
-        $this->breadcrumbs->push('Patient', '/patient');
+        $this->breadcrumbs->push('Pasien', '/patient');
         $this->breadcrumbs->push('Create', '/create');
         $this->breadcrumbs->unshift('Admin', '/');
 
         //page props
         $data['breadcrumbs'] = $this->breadcrumbs->show();
-        $data['page_title'] = '<strong>Add New</strong> Patient';
+        $data['page_title'] = '<strong>Tambah</strong> Pasien';
         $data['page_content'] = 'page/patient/create';
         $data['page_current'] = 'page/patient';
 
         //form props
-        $data['form_title'] = "<strong>Add new</strong> Patient";
+        $data['form_title'] = "<strong>Tambah</strong> Pasien";
         $data['form_action'] = site_url($this->url.'/create');
 
         //select option
@@ -222,13 +222,13 @@ class Patient extends MY_Controller
         }
 
         //breadcrumbs config
-        $this->breadcrumbs->push('Patient', '/patient');
+        $this->breadcrumbs->push('Pasien', '/patient');
         $this->breadcrumbs->push('Edit', '/edit');
         $this->breadcrumbs->unshift('Admin', '/');
 
         //page props
         $data['breadcrumbs'] = $this->breadcrumbs->show();
-        $data['page_title'] = '<strong>Edit</strong> Patient';
+        $data['page_title'] = '<strong>Edit</strong> Pasien';
         $data['page_content'] = 'page/patient/edit';
         $data['page_current'] = 'page/patient';
 

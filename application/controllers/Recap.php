@@ -20,7 +20,6 @@ class Recap extends CI_Controller {
         $spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(30);
         $spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(30);
         $spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(30);
-        $spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(20);
 
         $spreadsheet->getActiveSheet()->mergeCells('A1:F1');
 
@@ -42,27 +41,26 @@ class Recap extends CI_Controller {
         
 
         $last = count($this->data_to_show())+3;
-        $cordinat = 'A3:F' . $last . '';
-        $cordinat_last = 'A'.$last.':F' . $last . '';
+        $cordinat = 'A3:E' . $last . '';
+        $cordinat_last = 'A'.$last.':E' . $last . '';
         $sheet->getStyle($cordinat)->applyFromArray($styleArray);
         $spreadsheet->getActiveSheet()->getStyle('A1')->applyFromArray($boldArray);
-        $spreadsheet->getActiveSheet()->getStyle('A3:F3')->applyFromArray($boldArray);
+        $spreadsheet->getActiveSheet()->getStyle('A3:E3')->applyFromArray($boldArray);
         $spreadsheet->getActiveSheet()->getStyle($cordinat_last)->applyFromArray($boldArray);
 
-        $sheet->getStyle('A:F')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('A1:F2')->getAlignment()->setWrapText(true);
+        $sheet->getStyle('A:E')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A1:E2')->getAlignment()->setWrapText(true);
 
-        $sheet->getStyle('A:F')->getAlignment()->setHorizontal('center');
+        $sheet->getStyle('A:E')->getAlignment()->setHorizontal('center');
 
         
         $sheet->setCellValue('A1', 'Rekap Data');
 
         $sheet->setCellValue('A3', 'Tanggal');
-        $sheet->setCellValue('B3', 'Jumlah Pasien Positif');
-        $sheet->setCellValue('C3', 'Jumlah Pasien Dirawat');
-        $sheet->setCellValue('D3', 'Jumlah Pasien Sembuh');
-        $sheet->setCellValue('E3', 'Jumlah Pasien Meninggal');        
-        $sheet->setCellValue('F3', 'Total');
+        $sheet->setCellValue('B3', 'Jumlah Pasien Dirawat');
+        $sheet->setCellValue('C3', 'Jumlah Pasien Sembuh');
+        $sheet->setCellValue('D3', 'Jumlah Pasien Meninggal');        
+        $sheet->setCellValue('E3', 'Total');
 
         $arrayData = $this->data_to_show();
         $spreadsheet->getActiveSheet()
@@ -90,17 +88,15 @@ class Recap extends CI_Controller {
         $this->load->model('m_patients');
         $patient_by_date = $this->m_patients->get_recap();
         $res = [];
-        $total_positif = 0;
         $total_dirawat = 0;
         $total_sembuh = 0;
         $total_meninggal = 0;
         $total_total=0;
 
         foreach ($patient_by_date as $key => $value) {
-            $total = $value->total+$value->dirawat+$value->sembuh+$value->meninggal;
-            $arr = [$value->date, $value->total, $value->dirawat, $value->sembuh,$value->meninggal, $total];
+            $total = $value->dirawat+$value->sembuh+$value->meninggal;
+            $arr = [$value->date, $value->dirawat, $value->sembuh,$value->meninggal, $value->total];
 
-            $total_positif = $total_positif + $value->total;
             $total_dirawat = $total_dirawat + $value->dirawat;
             $total_sembuh = $total_sembuh  + $value->sembuh;
             $total_meninggal = $total_meninggal + $value->meninggal;
@@ -108,7 +104,7 @@ class Recap extends CI_Controller {
 
             array_push($res, $arr);
         }
-        $arr_total = ['TOTAL', $total_positif, $total_dirawat, $total_sembuh, $total_meninggal, $total_total];
+        $arr_total = ['TOTAL', $total_dirawat, $total_sembuh, $total_meninggal, $total_total];
         array_push($res, $arr_total);
         return $res;
 

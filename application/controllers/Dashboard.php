@@ -1,5 +1,7 @@
 <?php
-    
+
+use phpDocumentor\Reflection\DocBlock\Tags\Var_;
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Dashboard extends MY_Controller {
@@ -34,7 +36,8 @@ class Dashboard extends MY_Controller {
 
         $data['cluster_by_age'] = $this->string_cluster_by_age($patient_by_age);
         $data['cluster_by_status'] = $this->string_cluster_by_status($patient_by_status);
-       
+
+        $data['recap'] = $this->reca_data();
         $this->load->view('index', $data);
     }
 
@@ -88,6 +91,29 @@ class Dashboard extends MY_Controller {
             }
         }
         return json_encode(array($cured, $incare, $dead));
+    }
+
+    public function reca_data()
+    {
+        $this->load->model('m_patients');
+        $patient_by_date = $this->m_patients->get_recap();
+        $total_dirawat = 0;
+        $total_sembuh = 0;
+        $total_meninggal = 0;
+        $total_total = 0;
+
+        foreach ($patient_by_date as $key => $value) {
+            $total = $value->dirawat + $value->sembuh + $value->meninggal;
+            $arr = [$value->date, $value->dirawat, $value->sembuh, $value->meninggal, $value->total];
+
+            $total_dirawat = $total_dirawat + $value->dirawat;
+            $total_sembuh = $total_sembuh  + $value->sembuh;
+            $total_meninggal = $total_meninggal + $value->meninggal;
+            $total_total = $total_total + $total;
+        }
+        $arr_total = [$total_total, $total_dirawat, $total_sembuh, $total_meninggal];
+    
+        return $arr_total;
     }
 
 }

@@ -89,7 +89,7 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 
 define('APP_NAME', 'Covid-19 Dashboard');
 define('APP_AUTHOR', 'Raviq Lahadi');
-define('APP_DESC', 'Simple Independent Covid-19 Dashboard For Bee Solution Online Test');
+define('APP_DESC', 'Simple Independent Covid-19 Dashboard For Bee Solution Online Test. Untuk login, gunakan username: admin@root dan password admin123');
 define('FAVICON_IMAGE', 'assets/favicon.ico');
 define('ICON_IMAGE', 'assets/logo/coreigniter.png');
 define('COREUI_PATH', 'assets/node_modules/@coreui/coreui/dist/');
